@@ -10,7 +10,7 @@ let isDebug = false;
 module.exports = function (options, useWebpack) {
     options = options || {};
     let mockPath = options.entry;
-    let entry = {};
+    let entry = [];
     isDebug = options.debug;
     if (path.isAbsolute(mockPath) === false) {
         mockPath = path.resolve(process.cwd(), mockPath);
@@ -20,7 +20,8 @@ module.exports = function (options, useWebpack) {
     } else {
         const pa = fs.readdirSync(mockPath);
         pa.forEach(function (ele, index) {
-            entry[ele] = path.join(mockPath, ele);
+            entry.push(path.join(mockPath, ele))
+            // entry[ele] = ;
         });
     }
     logcat.log("entry", entry);
