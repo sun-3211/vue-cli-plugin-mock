@@ -12,7 +12,7 @@ module.exports = (api, options) => {
         }
         let entry = './mock/';
         mockOptions.entry = api.resolve(entry);
-        logger.log(mockOptions);
+        // logger.log(mockOptions);
         api.configureDevServer(function (app, server) {
             app.use(MockMiddleware(mockOptions, true));
         });

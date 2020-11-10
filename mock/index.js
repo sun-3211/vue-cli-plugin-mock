@@ -16,15 +16,14 @@ module.exports = function (options, useWebpack) {
         mockPath = path.resolve(process.cwd(), mockPath);
     }
     if (!fs.existsSync(mockPath)) {
-        logcat.log("未创建mock目录");
+        logcat.error("未创建mock目录");
     } else {
         const pa = fs.readdirSync(mockPath);
         pa.forEach(function (ele, index) {
-            // entry.push()
             entry[ele] = path.join(mockPath, ele);
         });
     }
-    logcat.log("entry", entry);
+    // logcat.log("entry", entry);
     let watchConfig = {entry: entry, interval: options.interval || 200};
     if (useWebpack) {
         isDebug && logcat.debug('use webpack watch mock file.');

@@ -67,7 +67,7 @@ function Watcher(options, callback) {
                     Object.assign(mockMap, mock);
                     logcat.log('refreshing mock service...');
                 }
-            })
+            });
             callback(mockMap);
         } catch (err) {
             console.log(chalk.red(err));
