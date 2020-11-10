@@ -10,7 +10,7 @@ module.exports = (api, options) => {
             logger.log('mock middleware disabled!');
             return;
         }
-        let entry = './mock/index.js';
+        let entry = './mock/';
         mockOptions.entry = api.resolve(entry);
         logger.log(mockOptions);
         api.configureDevServer(function (app, server) {

@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require("fs");
 const chalk = require('chalk');
 const apiMocker = require('express-mock-restful');
 let fsWatch = require('./fsWatch');
@@ -8,14 +9,14 @@ let isDebug = false;
 
 module.exports = function (options, useWebpack) {
     options = options || {};
-    let entry = './mock/';
+    let entry = options.entry;
     isDebug = options.debug;
-
     if (path.isAbsolute(entry) === false) {
         entry = path.resolve(process.cwd(), entry);
     }
     console.log(entry);
-    if (!path.isDirectory(entry)) {
+
+    if (!fs.existsSync(entry)) {
         logcat.log("未创建mock目录");
         return;
     }
