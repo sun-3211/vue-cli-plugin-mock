@@ -23,6 +23,7 @@ module.exports = function (options, useWebpack) {
             entry[ele] = path.join(mockPath, ele);
         });
     }
+    logcat.log("entry", entry);
     let watchConfig = {entry: entry, interval: options.interval || 200};
     if (useWebpack) {
         isDebug && logcat.debug('use webpack watch mock file.');
@@ -35,6 +36,7 @@ module.exports = function (options, useWebpack) {
     return apiMocker({}, mocklogFn);
 
     function refreshMock(mockObj) {
+        logcat.log("refreshMock", mockObj);
         apiMocker.refresh(mockObj);
         logcat.log('Done: Hot Mocker file replacement success!');
     }
