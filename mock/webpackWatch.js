@@ -6,7 +6,7 @@ const logcat = require('./logger');
 
 let webpacInstance;
 let ProgressPlugin;
-let outputfile = 'mock.configs.js';
+// let outputfile = 'mock.configs.js';
 
 function Watcher(options, callback) {
     let mfs = new MemoryFS();
@@ -25,10 +25,6 @@ function Watcher(options, callback) {
     // 监听文件修改重新加载代码
     let compiler = webpacInstance({
         entry: options.entry,
-        output: {
-            filename: outputfile,
-            libraryTarget: 'commonjs2',
-        },
         optimization: {
             minimize: false,
         },
@@ -56,8 +52,9 @@ function Watcher(options, callback) {
         }
         try {
             // Read each file and compile module
+            console.log(compiler);
             const {outputPath} = compiler;
-            const filepath = path.join(outputPath, outputfile);
+            const filepath = path.join(outputPath, "");
             const content = mfs.readFileSync(filepath, 'utf8');
             logcat.log("content", content);
             const outputModule = requireFromString(content, filepath);
