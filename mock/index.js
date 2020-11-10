@@ -9,19 +9,21 @@ let isDebug = false;
 
 module.exports = function (options, useWebpack) {
     options = options || {};
-    let entry = options.entry;
+    let mockPath = options.entry;
+    let entry = {};
     isDebug = options.debug;
-    if (path.isAbsolute(entry) === false) {
-        entry = path.resolve(process.cwd(), entry);
+    if (path.isAbsolute(mockPath) === false) {
+        mockPath = path.resolve(process.cwd(), mockPath);
     }
-    console.log(entry);
-
-    if (!fs.existsSync(entry)) {
+    if (!fs.existsSync(mockPath)) {
         logcat.log("未创建mock目录");
-        return;
+    } else {
+        const pa = fs.readdirSync(mockPath);
+        pa.forEach(function (ele, index) {
+            entry[ele] = path.join(mockPath, ele);
+        });
     }
     let watchConfig = {entry: entry, interval: options.interval || 200};
-
     if (useWebpack) {
         isDebug && logcat.debug('use webpack watch mock file.');
         webpackWatch(watchConfig, refreshMock);
