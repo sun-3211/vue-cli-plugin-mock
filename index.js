@@ -9,9 +9,10 @@ module.exports = (api, options) => {
         logger.log('mock middleware disabled!');
         return;
     }
-    let entry = './mock/';
+    let entry = mockOptions.entry || './mock/';
     mockOptions.entry = api.resolve(entry);
-    if (options.type === "local") {
+    console.log(mockOptions);
+    if (mockOptions.type === "local") {
         webpackWatch(mockOptions, function (data) {
             console.log("====>", data);
         })
