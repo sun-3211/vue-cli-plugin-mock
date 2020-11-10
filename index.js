@@ -11,14 +11,14 @@ module.exports = (api, options) => {
     }
     let entry = './mock/';
     mockOptions.entry = api.resolve(entry);
-    if (process.env.NODE_ENV === 'development') {
-        api.configureDevServer(function (app, server) {
-            app.use(MockMiddleware(mockOptions, true));
-        });
-    } else if (options.debug) {
-        // logger.log(mockOptions);
+    if (options.type === "local") {
         webpackWatch(mockOptions, function (data) {
             console.log("====>", data);
         })
+    } else if (process.env.NODE_ENV === 'development') {
+        api.configureDevServer(function (app, server) {
+            app.use(MockMiddleware(mockOptions, true));
+        });
+        // logger.log(mockOptions);
     }
 };
