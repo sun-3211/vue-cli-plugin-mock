@@ -12,6 +12,7 @@ Object.keys(route).forEach(key => {
 });
 
 request.use(async (ctx, next) => {
+        console.log("method", ctx.req.options.method);
         if (route[ctx.req.options.method]) {
             const data = route[ctx.req.options.method][ctx.req.url];
             console.log(data);
