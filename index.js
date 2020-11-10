@@ -11,7 +11,7 @@ module.exports = (api, options) => {
     }
     let entry = mockOptions.entry || './mock/';
     mockOptions.entry = api.resolve(entry);
-    console.log(mockOptions);
+    logger.log(mockOptions);
     if (mockOptions.type === "local") {
         api.chainWebpack(config => {
             config.entry('app').add("vue-cli-plugin-mock/mock/local_util.js");
