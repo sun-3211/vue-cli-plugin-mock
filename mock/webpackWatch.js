@@ -26,6 +26,10 @@ function Watcher(options, callback) {
     // 监听文件修改重新加载代码
     let compiler = webpacInstance({
         entry: options.entry,
+        output: {
+            filename: '[name]',
+            libraryTarget: 'commonjs2',
+        },
         optimization: {
             minimize: false,
         },
@@ -53,13 +57,12 @@ function Watcher(options, callback) {
         }
         try {
             // Read each file and compile module
-            console.log(compiler);
-            Object.keys(options.entry).forEach(filename => {
-                const {outputPath} = compiler;
-                const filepath = path.join(outputPath, filename);
+            const {outputPath} = compiler;
+            Object.keys(options.entry).forEach(outputfile => {
+                const filepath = path.join(outputPath, outputfile);
                 const content = mfs.readFileSync(filepath, 'utf8');
+                logcat.log("content", content);
                 const outputModule = requireFromString(content, filepath);
-                logcat.log("content", outputModule);
                 if (outputModule) {
                     const mockMap = outputModule.default || outputModule || {};
                     logcat.log('refreshing mock service...');
