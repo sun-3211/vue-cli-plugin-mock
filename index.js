@@ -15,10 +15,10 @@ module.exports = (api, options) => {
         const MockMiddleware = require('./mock/local');
         const mocker = MockMiddleware(mockOptions, true);
         mocker.refresh = function (data) {
-            api.injectImports(api.entryFile, `
-            import MockUtil from 'vue-cli-plugin-mock/mock/local_util.js'
-            new MockUtil(${data})
-            `)
+            // api.injectImports(api.entryFile, `
+            // import MockUtil from 'vue-cli-plugin-mock/mock/local_util.js'
+            // new MockUtil(${data})
+            // `)
             console.log("====>", data);
         }
     } else if (process.env.NODE_ENV === 'development') {
