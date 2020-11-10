@@ -1,13 +1,12 @@
 module.exports = (api, options) => {
-    console.log("api");
     api.chainWebpack(config => {
-        console.log("config");
+        const before = config.devServer.get("before");
         config.devServer.before(app => {
+            before(app);
             app.get('/test', function (req, res) {
                 // res.json({aaa: "bbb"});
-                res.end("aaaaaaaaaaaaaaaa");
+                res.end("testtesttesttesttest");
             });
         });
-        // console.log(config.devServer);
     });
 }
