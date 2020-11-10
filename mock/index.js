@@ -24,8 +24,8 @@ module.exports = function (options, useWebpack) {
             entry[ele] = path.join(mockPath, ele);
         });
     }
-    logcat.log("entry", entry, mockPath);
-    let watchConfig = {entry: mockPath, interval: options.interval || 200};
+    logcat.log("entry", entry);
+    let watchConfig = {entry: entry, interval: options.interval || 200};
     if (useWebpack) {
         isDebug && logcat.debug('use webpack watch mock file.');
         webpackWatch(watchConfig, refreshMock);
