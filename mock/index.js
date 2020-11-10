@@ -10,7 +10,7 @@ let isDebug = false;
 module.exports = function (options, useWebpack) {
     options = options || {};
     let mockPath = options.entry;
-    let entry = [];
+    let entry = {};
     isDebug = options.debug;
     if (path.isAbsolute(mockPath) === false) {
         mockPath = path.resolve(process.cwd(), mockPath);
