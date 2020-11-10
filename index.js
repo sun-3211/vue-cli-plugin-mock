@@ -1,4 +1,3 @@
-const MockMiddleware = require('./mock');
 const webpackWatch = require('./mock/webpackWatch');
 const logger = require('./mock/logger');
 module.exports = (api, options) => {
@@ -13,10 +12,13 @@ module.exports = (api, options) => {
     mockOptions.entry = api.resolve(entry);
     console.log(mockOptions);
     if (mockOptions.type === "local") {
-        webpackWatch(mockOptions, function (data) {
+        const MockMiddleware = require('./mock/local');
+        const api = MockMiddleware(mockOptions, true);
+        api.refresh = function (data) {
             console.log("====>", data);
-        })
+        }
     } else if (process.env.NODE_ENV === 'development') {
+        const MockMiddleware = require('./mock');
         api.configureDevServer(function (app, server) {
             app.use(MockMiddleware(mockOptions, true));
         });
