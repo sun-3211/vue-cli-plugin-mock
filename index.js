@@ -13,6 +13,10 @@ module.exports = (api, options) => {
     mockOptions.entry = api.resolve(entry);
     console.log(mockOptions);
     if (mockOptions.type === "local") {
+        api.chainWebpack(config => {
+            config.entry('app').add("vue-cli-plugin-mock/mock/local_util.js");
+            // console.log(config);
+        });
         const MockMiddleware = require('./mock/local');
         const mocker = MockMiddleware(mockOptions, true);
         mocker.refresh = function (data) {
