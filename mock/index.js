@@ -20,12 +20,12 @@ module.exports = function (options, useWebpack) {
     } else {
         const pa = fs.readdirSync(mockPath);
         pa.forEach(function (ele, index) {
-            entry.push(path.join(mockPath, ele))
-            // entry[ele] = ;
+            // entry.push()
+            entry[ele] = path.join(mockPath, ele);
         });
     }
-    logcat.log("entry", entry);
-    let watchConfig = {entry: entry, interval: options.interval || 200};
+    logcat.log("entry", entry, mockPath);
+    let watchConfig = {entry: mockPath, interval: options.interval || 200};
     if (useWebpack) {
         isDebug && logcat.debug('use webpack watch mock file.');
         webpackWatch(watchConfig, refreshMock);
