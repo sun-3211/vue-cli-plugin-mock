@@ -1,12 +1,26 @@
 {
   "name": "vue-cli-plugin-mock",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
   "main": "index.js",
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "cli",
+    "mock"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ./",
+    "test": "mocha  --check-leaks --bail --exit --reporter spec test/"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "repository": "http://192.168.124.150:12080/front-end-developers/vue-cli-plugin-mock.git",
+  "dependencies": {
+    "express-mock-restful": "^1.1.2",
+    "memory-fs": "^0.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.x",
+    "express": "4.17.1",
+    "mocha": "8.2.1",
+    "supertest": "6.0.1"
+  }
 }

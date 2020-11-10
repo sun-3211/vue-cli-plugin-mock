@@ -1,16 +1,20 @@
+const MockMiddleware = require('./mock');
+const webpackWatch = require('./mock/webpackWatch');
+const logger = require('./mock/logger');
 module.exports = (api, options) => {
-    console.log("api")
-    api.chainWebpack(config => {
-        // const before = config.devServer.get("before");
-        config.devServer.delete("before");
-        console.log("config")
-        config.devServer.before(app => {
-            console.log("before")
-            // before(app);
-            app.get('/test', function (req, res) {
-                // res.json({aaa: "bbb"});
-                res.end("testtesttesttesttest");
-            });
+    if (process.env.NODE_ENV === 'development') {
+        const webpack = require(api.resolve('node_modules/webpack'));
+        webpackWatch.configWebpack(webpack);
+        const mockOptions = options.pluginOptions && options.pluginOptions.mock || {};
+        if (mockOptions.disable) {
+            logger.log('mock middleware disabled!');
+            return;
+        }
+        let entry = './mock/index.js';
+        mockOptions.entry = api.resolve(entry);
+        logger.log(mockOptions);
+        api.configureDevServer(function (app, server) {
+            app.use(MockMiddleware(mockOptions, true));
         });
-    });
-}
+    }
+};
