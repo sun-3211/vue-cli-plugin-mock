@@ -6,6 +6,7 @@ const logcat = require('./logger');
 
 let webpacInstance;
 let ProgressPlugin;
+
 // let outputfile = 'mock.configs.js';
 
 function Watcher(options, callback) {
@@ -53,16 +54,18 @@ function Watcher(options, callback) {
         try {
             // Read each file and compile module
             console.log(compiler);
-            const {outputPath} = compiler;
-            const filepath = path.join(outputPath, "");
-            const content = mfs.readFileSync(filepath, 'utf8');
-            logcat.log("content", content);
-            const outputModule = requireFromString(content, filepath);
-            if (outputModule) {
-                const mockMap = outputModule.default || outputModule || {};
-                logcat.log('refreshing mock service...');
-                callback(mockMap);
-            }
+            Object.keys(options.entry).forEach(filename => {
+                const {outputPath} = compiler;
+                const filepath = path.join(outputPath, filename);
+                const content = mfs.readFileSync(filepath, 'utf8');
+                const outputModule = requireFromString(content, filepath);
+                logcat.log("content", outputModule);
+                if (outputModule) {
+                    const mockMap = outputModule.default || outputModule || {};
+                    logcat.log('refreshing mock service...');
+                    callback(mockMap);
+                }
+            })
         } catch (err) {
             console.log(chalk.red(err));
         }
