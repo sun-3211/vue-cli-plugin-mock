@@ -1,6 +1,7 @@
 const webpackWatch = require('./mock/webpackWatch');
 const logger = require('./mock/logger');
 module.exports = (api, options) => {
+    console.log(api, options);
     const webpack = require(api.resolve('node_modules/webpack'));
     webpackWatch.configWebpack(webpack);
     const mockOptions = options.pluginOptions && options.pluginOptions.mock || {};
