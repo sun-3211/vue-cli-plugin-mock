@@ -34,13 +34,11 @@ function Watcher(options, callback) {
             minimize: false,
         },
         module: {
-            rules: [
-                {
-                    test: /\.js$/,
-                    use: ['babel-loader?sourceType=unambiguous'],
-                    exclude: /(node_modules|bower_components)/,
-                },
-            ],
+            rules: [{
+                test: /\.js$/,
+                use: ['babel-loader?sourceType=unambiguous'],
+                exclude: /(node_modules|bower_components)/,
+            },],
         },
         plugins: ProgressPlugin ? [new ProgressPlugin({})] : [],
     });
@@ -58,17 +56,19 @@ function Watcher(options, callback) {
         try {
             // Read each file and compile module
             const {outputPath} = compiler;
+            const mockMap = {};
             Object.keys(options.entry).forEach(outputfile => {
                 const filepath = path.join(outputPath, outputfile);
                 const content = mfs.readFileSync(filepath, 'utf8');
-                logcat.log("content", content);
+                // logcat.log("content", content);
                 const outputModule = requireFromString(content, filepath);
                 if (outputModule) {
-                    const mockMap = outputModule.default || outputModule || {};
+                    const mock = outputModule.default || outputModule || {};
+                    Object.assign(mockMap, mock);
                     logcat.log('refreshing mock service...');
-                    callback(mockMap);
                 }
             })
+            callback(mockMap);
         } catch (err) {
             console.log(chalk.red(err));
         }
