@@ -7,16 +7,25 @@ files.keys().forEach(key => {
 });
 
 Object.keys(route).forEach(key => {
+    if (key === "GET" || key === "POST") return;
     const d = key.split(" ");
-    route[d[0].toUpperCase()][d[1]] = route[key];
+    route[d[0].toUpperCase()][d[1].toLowerCase()] = route[key];
 });
 
 request.use(async (ctx, next) => {
-        console.log("method", ctx.req.options.method);
-        if (route[ctx.req.options.method]) {
-            const data = route[ctx.req.options.method][ctx.req.url];
-            console.log(data);
+        if (route[ctx.req.options.method.toUpperCase()] &&
+            route[ctx.req.options.method.toUpperCase()][ctx.req.url.toLowerCase()]) {
+            const data = route[ctx.req.options.method.toUpperCase()][ctx.req.url.toLowerCase()];
+            if (data instanceof Function) {
+                const promise = new Promise(resolve => {
+                    data({body: ctx.req.data}, {json: resolve, end: resolve});
+                });
+                ctx.res = {data: await promise};
+            } else {
+                ctx.res = {data};
+            }
+            return;
         }
-        return next();
+        await next();
     }, {core: true, global: true}
 );
