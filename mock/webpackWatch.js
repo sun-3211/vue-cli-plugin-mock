@@ -50,7 +50,7 @@ function Watcher(options, callback) {
         }
         if (stats.hasErrors()) {
             const errors = stats.compilation ? stats.compilation.errors : null;
-            console.log(chalk.red(errors));
+            logcat.error(errors);
             return;
         }
         try {

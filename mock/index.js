@@ -36,7 +36,7 @@ module.exports = function (options, useWebpack) {
     return apiMocker({}, mocklogFn);
 
     function refreshMock(mockObj) {
-        logcat.log("refreshMock", mockObj);
+        logcat.log("refreshMock", Object.keys(mockObj));
         apiMocker.refresh(mockObj);
         logcat.log('Done: Hot Mocker file replacement success!');
     }
