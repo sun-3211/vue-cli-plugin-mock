@@ -2,7 +2,7 @@ const Module = require('module');
 const path = require('path');
 const chalk = require('chalk');
 const MemoryFS = require('memory-fs');
-const logcat = require('./logger');
+const logger = require('./logger');
 
 let webpacInstance;
 let ProgressPlugin;
@@ -15,7 +15,7 @@ function Watcher(options, callback) {
         try {
             webpacInstance = require('webpack');
         } catch (e) {
-            console.log('[MOCK] cannot find webpack module.');
+            logger.error('cannot find webpack module.');
         }
     }
     try {
@@ -45,12 +45,12 @@ function Watcher(options, callback) {
     compiler.outputFileSystem = mfs;
     compiler.watch({aggregateTimeout: options.interval}, function (error, stats) {
         if (error) {
-            logcat.log(chalk.red(error));
+            logger.error(chalk.red(error));
             return;
         }
         if (stats.hasErrors()) {
             const errors = stats.compilation ? stats.compilation.errors : null;
-            logcat.error(errors);
+            logger.error(errors);
             return;
         }
         try {
@@ -65,12 +65,12 @@ function Watcher(options, callback) {
                 if (outputModule) {
                     const mock = outputModule.default || outputModule || {};
                     Object.assign(mockMap, mock);
-                    logcat.log('refreshing mock service...');
+                    logger.log('refreshing mock service...');
                 }
             });
             callback(mockMap);
         } catch (err) {
-            console.log(chalk.red(err));
+            logger.error(err);
         }
     });
 }
@@ -82,7 +82,7 @@ Watcher.configWebpack = function (webpack) {
 module.exports = Watcher;
 
 function requireFromString(src, filename) {
-    var m = new Module();
+    const m = new Module();
     m._compile(src, filename);
     return m.exports;
 }

@@ -20,9 +20,9 @@ request.use(async (ctx, next) => {
                 const promise = new Promise(resolve => {
                     data({body: ctx.req.data || {}, query: ctx.req.params || {}}, {json: resolve, end: resolve});
                 });
-                ctx.res = {data: await promise};
+                ctx.res = await promise;
             } else {
-                ctx.res = {data};
+                ctx.res = data;
             }
             return;
         }
