@@ -18,7 +18,11 @@ request.use(async (ctx, next) => {
             const data = route[ctx.req.options.method.toUpperCase()][ctx.req.url.toLowerCase()];
             if (data instanceof Function) {
                 const promise = new Promise(resolve => {
-                    data({body: ctx.req.data || {}, query: ctx.req.params || {}}, {json: resolve, end: resolve});
+                    const request = {body: ctx.req.options.data || {}, query: ctx.req.options.params || {}};
+                    data(JSON.parse(JSON.stringify(request)), {
+                        json: resolve,
+                        end: resolve
+                    });
                 });
                 ctx.res = await promise;
             } else {
