@@ -20,7 +20,10 @@ request.use(async (ctx, next) => {
                 const promise = new Promise(resolve => {
                     const request = {body: ctx.req.options.data || {}, query: ctx.req.options.params || {}};
                     data(JSON.parse(JSON.stringify(request)), {
-                        json: resolve,
+                        json(d) {
+                            const result = JSON.parse(JSON.stringify(d));
+                            resolve(result);
+                        },
                         end: resolve
                     });
                 });

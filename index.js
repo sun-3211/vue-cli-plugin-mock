@@ -13,7 +13,7 @@ module.exports = (api, options) => {
     logger.log(mockOptions);
     if (mockOptions.type === "local") {
         api.chainWebpack(config => {
-            let entry = "app";
+            let entry;
             try {
                 entry = config.entryPoints.store.keys().next().value;
             } catch (e) {
@@ -22,15 +22,6 @@ module.exports = (api, options) => {
             }
             config.entry(entry).add("vue-cli-plugin-mock/mock/local.js");
         });
-        // const MockMiddleware = require('./mock/local');
-        // const mocker = MockMiddleware(mockOptions, true);
-        // mocker.refresh = function (data) {
-        //     // api.injectImports(api.entryFile, `
-        //     // import MockUtil from 'vue-cli-plugin-mock/mock/local_util.js'
-        //     // new MockUtil(${data})
-        //     // `)
-        //     console.log("====>", data);
-        // }
     } else if (process.env.NODE_ENV === 'development') {
         const MockMiddleware = require('./mock');
         api.configureDevServer(function (app, server) {
