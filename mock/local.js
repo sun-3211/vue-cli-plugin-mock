@@ -29,7 +29,11 @@ request.use(async (ctx, next) => {
                 });
                 ctx.res = await promise;
             } else {
-                ctx.res = data;
+                if (data instanceof Object) {
+                    ctx.res = JSON.parse(JSON.stringify(data));
+                } else {
+                    ctx.res = data;
+                }
             }
             return;
         }
