@@ -17,6 +17,7 @@ module.exports = function (options, useWebpack) {
     }
     if (!fs.existsSync(mockPath)) {
         logcat.error("未创建mock目录");
+        return apiMocker({}, mocklogFn);
         // return;
     } else {
         const pa = fs.readdirSync(mockPath);
