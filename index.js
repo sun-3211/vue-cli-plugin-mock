@@ -8,8 +8,7 @@ module.exports = (api, options) => {
     }
     const webpack = require(api.resolve('node_modules/webpack'));
     webpackWatch.configWebpack(webpack);
-    let entry = mockOptions.entry || './mock/';
-    mockOptions.entry = api.resolve(entry);
+    mockOptions.entry = api.resolve('./mock/');
     logger.log(mockOptions);
     if (mockOptions.type === "local") {
         api.chainWebpack(config => {
