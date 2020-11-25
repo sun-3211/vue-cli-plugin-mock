@@ -1,13 +1,13 @@
 const webpackWatch = require('./mock/webpackWatch');
 const logger = require('./mock/logger');
 module.exports = (api, options) => {
-    const webpack = require(api.resolve('node_modules/webpack'));
-    webpackWatch.configWebpack(webpack);
     const mockOptions = options.pluginOptions && options.pluginOptions.mock || {};
     if (mockOptions.disable) {
         logger.log('mock middleware disabled!');
         return;
     }
+    const webpack = require(api.resolve('node_modules/webpack'));
+    webpackWatch.configWebpack(webpack);
     let entry = mockOptions.entry || './mock/';
     mockOptions.entry = api.resolve(entry);
     logger.log(mockOptions);
@@ -24,7 +24,7 @@ module.exports = (api, options) => {
         });
     } else if (process.env.NODE_ENV === 'development') {
         const MockMiddleware = require('./mock');
-        api.configureDevServer(function (app, server) {
+        api.configureDevServer(function (app) {
             app.use(MockMiddleware(mockOptions, true));
         });
         // logger.log(mockOptions);
