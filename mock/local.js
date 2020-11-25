@@ -3,9 +3,10 @@ import request from 'umi-request';
 const files = require.context('../../../mock', true, /\.js$/);
 const route = {GET: {}, POST: {}};
 files.keys().forEach(file => {
-    Object.keys(files(file).default).forEach(key => {
+    const mock =files(file).default;
+    Object.keys(mock).forEach(key => {
         const d = key.split(" ");
-        route[d[0].toUpperCase()][d[1].toLowerCase()] = route[key];
+        route[d[0].toUpperCase()][d[1].toLowerCase()] = mock[key];
     });
 });
 
