@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require("fs");
-const chalk = require('chalk');
 const apiMocker = require('express-mock-restful');
 let fsWatch = require('./fsWatch');
 let logcat = require('./logger');

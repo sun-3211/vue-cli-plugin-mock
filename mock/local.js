@@ -3,15 +3,10 @@ import request from 'umi-request';
 const files = require.context('../../../mock', true, /\.js$/);
 const route = {GET: {}, POST: {}};
 files.keys().forEach(key => {
-    Object.assign(route, files(key).default);
-});
-
-Object.keys(route).forEach(key => {
-    if (key === "GET" || key === "POST") return;
     const d = key.split(" ");
-    route[d[0].toUpperCase()][d[1].toLowerCase()] = route[key];
+    route[d[0].toUpperCase()][d[1].toLowerCase()] = files[key];
 });
-
+console.log(route);
 request.use(async (ctx, next) => {
         if (route[ctx.req.options.method.toUpperCase()] &&
             route[ctx.req.options.method.toUpperCase()][ctx.req.url.toLowerCase()]) {
@@ -38,5 +33,5 @@ request.use(async (ctx, next) => {
             return;
         }
         await next();
-    }, {core: true, global: true}
+    }, {global: true}
 );
