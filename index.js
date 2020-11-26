@@ -19,7 +19,7 @@ module.exports = (api, options) => {
                 logger.error(e);
                 entry = "app"
             }
-            config.entry(entry).add("vue-cli-plugin-mock/mock/local.js");
+            config.entry(entry).add("@vue/cli-plugin-mock/mock/local.js");
         });
     } else if (process.env.NODE_ENV === 'development') {
         const MockMiddleware = require('./mock');
