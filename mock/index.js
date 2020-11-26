@@ -1,9 +1,9 @@
 const path = require('path');
 const fs = require("fs");
 const apiMocker = require('./api_mocker');
-let fsWatch = require('./fsWatch');
-let logcat = require('./logger');
-let webpackWatch = require('./webpackWatch');
+const fsWatch = require('./fsWatch');
+const logcat = require('./logger');
+const webpackWatch = require('./webpackWatch');
 let isDebug = false;
 
 module.exports = function (options, useWebpack) {
