@@ -16,7 +16,7 @@ module.exports = function (options, useWebpack) {
     }
     if (!fs.existsSync(mockPath)) {
         logcat.error("未创建mock目录");
-        return apiMocker({}, mocklogFn);
+        return apiMocker();
         // return;
     } else {
         const pa = fs.readdirSync(mockPath);
@@ -34,7 +34,7 @@ module.exports = function (options, useWebpack) {
         fsWatch(watchConfig, refreshMock);
     }
 
-    return apiMocker({}, mocklogFn);
+    return apiMocker();
 
     function refreshMock(mockObj) {
         logcat.log("refreshMock", Object.keys(mockObj));
@@ -42,11 +42,4 @@ module.exports = function (options, useWebpack) {
         logcat.log('Done: Hot Mocker file replacement success!');
     }
 
-    function mocklogFn(type, msg) {
-        if (type === 'matched') {
-            logcat.log(type + ' ' + msg);
-        } else {
-            isDebug && logcat.debug(type + ' ' + msg);
-        }
-    }
 };
