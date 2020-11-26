@@ -40,6 +40,7 @@ function Watcher(options, callback) {
                 exclude: /(node_modules|bower_components)/,
             },],
         },
+        target: "node",
         plugins: ProgressPlugin ? [new ProgressPlugin({})] : [],
     });
     compiler.outputFileSystem = mfs;

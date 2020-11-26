@@ -3,7 +3,7 @@ import request from 'umi-request';
 const files = require.context('../../../mock', true, /\.js$/);
 const route = {GET: {}, POST: {}};
 files.keys().forEach(file => {
-    const mock =files(file).default;
+    const mock = files(file).default;
     Object.keys(mock).forEach(key => {
         const d = key.split(" ");
         route[d[0].toUpperCase()][d[1].toLowerCase()] = mock[key];
@@ -18,8 +18,8 @@ request.use(async (ctx, next) => {
             const data = route[ctx.req.options.method.toUpperCase()][ctx.req.url.toLowerCase()];
             if (data instanceof Function) {
                 const promise = new Promise(resolve => {
-                    const request = {body: ctx.req.options.data || {}, query: ctx.req.options.params || {}};
-                    data(JSON.parse(JSON.stringify(request)), {
+                    const params = {body: ctx.req.options.data || {}, query: ctx.req.options.params || {}};
+                    data(JSON.parse(JSON.stringify(params), request), {
                         json(d) {
                             const result = JSON.parse(JSON.stringify(d));
                             resolve(result);
