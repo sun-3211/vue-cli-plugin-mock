@@ -51,7 +51,7 @@ function createRoute(mockModule) {
         if (!mockRouteMap[method]) {
             mockRouteMap[method] = [];
         }
-        logcat.log('createRoute', ': path:' + route.path + '  method:' + route.method);
+        // logcat.log('createRoute', ': path:' + route.path + '  method:' + route.method);
         mockRouteMap[method].push(route);
     });
 }

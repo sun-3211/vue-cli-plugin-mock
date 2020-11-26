@@ -1,14 +1,14 @@
-const pathToRegexp = require('path-to-regexp');
+const {pathToRegexp} = require('path-to-regexp');
 
 exports.parseKey = function parseKey(key) {
     let method = 'get';
     let path = key;
     if (key.indexOf(' ') > -1) {
-        let splited = key.split(' ');
-        method = splited[0].toLowerCase();
-        path = splited[1];
+        const split = key.split(' ');
+        method = split[0].toLowerCase();
+        path = split[1];
     }
-    return { method, path };
+    return {method, path};
 };
 
 exports.pathMatch = function pathMatch(options) {

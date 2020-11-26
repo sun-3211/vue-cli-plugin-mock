@@ -4,16 +4,16 @@ const chalk = require('chalk');
 const MemoryFS = require('memory-fs');
 const logger = require('./logger');
 
-let webpacInstance;
+let webpackInstance;
 let ProgressPlugin;
 
 // let outputfile = 'mock.configs.js';
 
 function Watcher(options, callback) {
     let mfs = new MemoryFS();
-    if (!webpacInstance) {
+    if (!webpackInstance) {
         try {
-            webpacInstance = require('webpack');
+            webpackInstance = require('webpack');
         } catch (e) {
             logger.error('cannot find webpack module.');
         }
@@ -24,7 +24,7 @@ function Watcher(options, callback) {
         // ignore
     }
     // 监听文件修改重新加载代码
-    let compiler = webpacInstance({
+    let compiler = webpackInstance({
         entry: options.entry,
         output: {
             filename: '[name]',
@@ -77,7 +77,7 @@ function Watcher(options, callback) {
 }
 
 Watcher.configWebpack = function (webpack) {
-    webpacInstance = webpack;
+    webpackInstance = webpack;
 };
 
 module.exports = Watcher;
