@@ -1,6 +1,6 @@
 import request from 'umi-request';
 
-const files = require.context('../../../mock', true, /\.js$/);
+const files = require.context('../../../../mock', true, /\.js$/);
 const route = {GET: {}, POST: {}};
 files.keys().forEach(file => {
     const mock = files(file).default;
