@@ -10,7 +10,7 @@ files.keys().forEach(file => {
     });
 });
 
-console.log(route)
+// console.log(route)
 
 request.use(async (ctx, next) => {
         if (route[ctx.req.options.method.toUpperCase()] &&
