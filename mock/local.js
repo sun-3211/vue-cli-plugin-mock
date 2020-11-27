@@ -5,8 +5,8 @@ const route = {GET: {}, POST: {}};
 files.keys().forEach(file => {
     const mock = files(file).default;
     Object.keys(mock).forEach(key => {
-        const d = key.split(/\s+/);
-        route[d[0].toUpperCase()][d[1].toLowerCase()] = mock[key];
+        const [method, path] = key.split(/\s+/);
+        route[method.toUpperCase()][path.toLowerCase()] = mock[key];
     });
 });
 

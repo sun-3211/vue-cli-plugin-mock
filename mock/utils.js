@@ -1,13 +1,7 @@
 const {pathToRegexp} = require('path-to-regexp');
 
 exports.parseKey = function parseKey(key) {
-    let method = 'get';
-    let path = key;
-    if (key.indexOf(' ') > -1) {
-        const split = key.split(' ');
-        method = split[0].toLowerCase();
-        path = split[1];
-    }
+    const [method, path] = key.split(/\s+/);
     return {method, path};
 };
 
