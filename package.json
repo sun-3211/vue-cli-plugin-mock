@@ -9,7 +9,7 @@
     "mock"
   ],
   "repository": "http://192.168.124.150:12080/front-end-developers/vue-cli-plugin-mock.git",
-  "devDependencies": {
+  "dependencies": {
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
     "memory-fs": "^0.5.0",
