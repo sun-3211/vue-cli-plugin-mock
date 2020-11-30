@@ -38,7 +38,17 @@ function Watcher(options, callback) {
                 test: /\.js$/,
                 use: ['babel-loader?sourceType=unambiguous'],
                 exclude: /(node_modules|bower_components)/,
-            },],
+            }, {
+                test: /\.txt$/i,
+                use: 'raw-loader',
+            }, {
+                test: /\.json\d?$/i,
+                loader: 'json5-loader',
+                options: {
+                    esModule: false,
+                },
+                type: 'javascript/auto',
+            }],
         },
         target: "node",
         plugins: ProgressPlugin ? [new ProgressPlugin({})] : [],
