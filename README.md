@@ -18,3 +18,23 @@ module.exports = {
     }
 }
 ```
+## 使用方式
+在根目录新建mock文件夹
+
+在目录中添加js文件 格式如下
+```
+import mockjs from 'mockjs'
+export default {
+    "get /test": {code: 0, msg: ""},
+    "POST /test": (req, res) => {
+        res.json({code: 0, msg: ""});
+    },
+    "POST /test2":mockjs.mock({code:"@natural(0,100)",msg:"@ctitle"}),
+    "GET /test2": (req, res) => {
+        res.json(mockjs.mock({code:"@natural(0,100)",msg:"@ctitle"}));
+    },
+    "GET /test3": (req, res) => {
+        res.end("test3");
+    },
+]
+```
