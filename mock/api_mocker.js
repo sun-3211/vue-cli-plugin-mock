@@ -38,13 +38,16 @@ apiMocker.refresh = function (mockObj) {
 
 function createRoute(mockModule) {
     Object.keys(mockModule).forEach((key) => {
-        let result = utils.parseKey(key);
-        let method = result.method;
+        let {method, path} = utils.parseKey(key);
+        method = method.toLowerCase();
+        path = path.toLowerCase();
         let handler = mockModule[key];
-        let regexp = new RegExp('^' + result.path.replace(/(:\w*)[^/]/gi, '(.*)') + '$');
-        let route = {path: result.path, method, regexp};
+        let regexp = new RegExp('^' + path.replace(/(:\w*)[^/]/gi, '(.*)') + '$');
+        let route = {path, method, regexp};
         if (typeof handler === 'function') {
             route.handler = handler;
+        } else if (typeof handler === 'string' || typeof handler === "number") {
+            route.handler = (req, res) => res.end(mockModule[key]);
         } else {
             route.handler = (req, res) => res.json(mockModule[key]);
         }
@@ -59,7 +62,7 @@ function createRoute(mockModule) {
 function matchRoute(req) {
     let url = req.url;
     let method = req.method.toLowerCase();
-    let uri = url.replace(/\?.*$/, '');
+    let uri = url.replace(/\?.*$/, '').toLowerCase();
     logcat.log('matchRoute', ':(path:' + url + '  method:' + method + ')');
     let routerList = mockRouteMap[method];
     return routerList && routerList.find((item) => item.path === uri || item.regexp.test(uri));
