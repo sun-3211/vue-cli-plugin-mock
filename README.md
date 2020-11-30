@@ -1,5 +1,13 @@
-修改文件 `vue.config.js`
+## 安装方式 
 
+`yarn add -D @vue/cli-plugin-mock`
+
+`npm i -dev @vue/cli-plugin-mock`
+
+## 修改配置
+`vue.config.js` 
+
+可不修改,不修改采用默认参数
 ```
 module.exports = {
     pluginOptions: {

@@ -1,14 +1,15 @@
 {
   "name": "@vue/cli-plugin-mock",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
+  "author": "sun_3211@hotmail.com",
   "license": "MIT",
   "keywords": [
     "vue",
     "cli",
     "mock"
   ],
-  "repository": "http://192.168.124.150:12080/front-end-developers/vue-cli-plugin-mock.git",
+  "repository": "https://github.com/sun-3211/vue-cli-plugin-mock.git",
   "dependencies": {
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
